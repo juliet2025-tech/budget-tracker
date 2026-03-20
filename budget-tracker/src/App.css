@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* App container */
+.App {
+  min-height: 100vh;
+  padding: 30px;
+  margin-left: 60px; /* 👈 shift content to the right */
+  transition: all 0.3s ease;
+}
+
+/* Light mode */
+.App.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark mode */
+.App.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Header */
+h1, h2, h3 {
+  margin-bottom: 10px;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  max-width: 300px;
+}
+
+input, select, button {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Button styling */
+button {
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Table styling */
+table {
+  border-collapse: collapse;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 600px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Dark mode table */
+.App.dark table {
+  background-color: #1e1e1e;
+}
+
+.App.dark th,
+.App.dark td {
+  border: 1px solid #444;
+}
+
+/* Inputs in dark mode */
+.App.dark input,
+.App.dark select {
+  background-color: #2a2a2a;
+  color: white;
+  border: 1px solid #555;
+}
