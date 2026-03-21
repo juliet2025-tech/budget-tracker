@@ -19,6 +19,9 @@ function App() {
   const [filterDate, setFilterDate] = useState("");
   const [theme, setTheme] = useState("light");
   const [showLogin, setShowLogin] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+const [categoryFilter, setCategoryFilter] = useState("");
+const [typeFilter, setTypeFilter] = useState("");
 
   // Get current user ID
   const userId = user?.uid;
@@ -127,13 +130,20 @@ const editEntry = async (id, updatedEntry) => {
           <EntryForm addEntry={addEntry} />
 
           <EntryList
-            entries={filteredEntries}
-            setFilterDate={setFilterDate}
-             deleteEntry={deleteEntry}
+  entries={filteredEntries}
+  setFilterDate={setFilterDate}
+  deleteEntry={deleteEntry}
   editEntry={editEntry}
-          />
+  searchTerm={searchTerm}
+  setSearchTerm={setSearchTerm}
+  categoryFilter={categoryFilter}
+  setCategoryFilter={setCategoryFilter}
+  typeFilter={typeFilter}
+  setTypeFilter={setTypeFilter}
+/>
 
           <CategorySummary entries={filteredEntries} />
+          
 
           <Chart entries={filteredEntries} />
           <button onClick={() => signOut(auth)}>Logout</button>
