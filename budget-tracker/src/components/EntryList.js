@@ -1,4 +1,10 @@
+import { useState } from "react";
+
 function EntryList({ entries, setFilterDate, deleteEntry, editEntry }) {
+
+   const [isEditing, setIsEditing] = useState(false);
+  const [currentEntry, setCurrentEntry] = useState(null);
+
   return (
     <div>
       <h3>Entries List</h3>
@@ -38,35 +44,74 @@ function EntryList({ entries, setFilterDate, deleteEntry, editEntry }) {
           Delete
         </button>
 
-      <button
+    <button
   onClick={() => {
-    const newDescription = prompt("Edit description:", entry.description);
-    const newAmount = prompt("Edit amount:", entry.amount);
-    const newCategory = prompt("Edit category:", entry.category);
-
-    // 🚨 Validate inputs
-    if (!newDescription || !newAmount || !newCategory) {
-      alert("All fields are required");
-      return;
-    }
-
-    editEntry(entry.id, {
-      description: newDescription,
-      amount: Number(newAmount),
-      category: newCategory,
-      type: entry.type,
-      date: entry.date,
-    });
+    setCurrentEntry(entry);
+    setIsEditing(true);
   }}
 >
   Edit
-</button>
+</button> 
       </td>
     </tr>
   ))}
 </tbody>
         </table>
       )}
+{isEditing && currentEntry && (
+  <div className="modal">
+    <div className="modal-content">
+      <h3>Edit Entry</h3>
+
+      <input
+        type="text"
+        value={currentEntry.description}
+        onChange={(e) =>
+          setCurrentEntry({
+            ...currentEntry,
+            description: e.target.value,
+          })
+        }
+      />
+
+      <input
+        type="number"
+        value={currentEntry.amount}
+        onChange={(e) =>
+          setCurrentEntry({
+            ...currentEntry,
+            amount: Number(e.target.value),
+          })
+        }
+      />
+
+      <input
+        type="text"
+        value={currentEntry.category}
+        onChange={(e) =>
+          setCurrentEntry({
+            ...currentEntry,
+            category: e.target.value,
+          })
+        }
+      />
+
+      <button
+        onClick={() => {
+          editEntry(currentEntry.id, currentEntry);
+          setIsEditing(false);
+        }}
+      >
+        Save
+      </button>
+
+      <button onClick={() => setIsEditing(false)}>
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }
