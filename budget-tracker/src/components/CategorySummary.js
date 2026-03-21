@@ -1,9 +1,7 @@
 function CategorySummary({ entries }) {
-  // Calculate totals per category
   const categoryTotals = entries.reduce((acc, entry) => {
     const { category, amount, type } = entry;
 
-    // Only track expenses (optional, but better)
     if (type === "expense") {
       if (!acc[category]) {
         acc[category] = 0;
@@ -15,16 +13,17 @@ function CategorySummary({ entries }) {
   }, {});
 
   return (
-    <div>
+    <div className="category-summary">
       <h3>Category Summary</h3>
 
       {Object.keys(categoryTotals).length === 0 ? (
-        <p>No expense data yet</p>
+        <p className="empty">No expense data yet</p>
       ) : (
         <ul>
           {Object.entries(categoryTotals).map(([category, total]) => (
-            <li key={category}>
-              {category}: ₦{total}
+            <li key={category} className="category-item">
+              <span>{category}</span>
+              <span className="amount">₦{total}</span>
             </li>
           ))}
         </ul>

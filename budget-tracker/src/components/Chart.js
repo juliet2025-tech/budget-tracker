@@ -1,7 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 function Chart({ entries }) {
-  // Prepare data (only expenses)
   const data = entries
     .filter((e) => e.type === "expense")
     .reduce((acc, entry) => {
@@ -17,7 +16,7 @@ function Chart({ entries }) {
     }, []);
 
   return (
-    <div>
+    <div className="chart-container">
       <h3>Expense Chart</h3>
 
       {data.length === 0 ? (

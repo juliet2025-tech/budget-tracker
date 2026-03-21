@@ -125,7 +125,10 @@ const editEntry = async (id, updatedEntry) => {
         <>
           
 
-          <Header balance={totalBalance} toggleTheme={toggleTheme} />
+          <Header balance={totalBalance} toggleTheme={toggleTheme}  user={user} />
+
+
+          
 
           <EntryForm addEntry={addEntry} />
 

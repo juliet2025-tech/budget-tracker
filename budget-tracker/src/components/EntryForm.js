@@ -4,7 +4,7 @@ function EntryForm({ addEntry }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("expense");
-  const [category, setCategory] = useState("Food");
+  const [category, setCategory] = useState("category")
   const [date, setDate] = useState("");
 
   const handleSubmit = (e) => {
@@ -57,6 +57,7 @@ function EntryForm({ addEntry }) {
         <option>Transport</option>
         <option>Entertainment</option>
         <option>Salary</option>
+         <option>personal</option>
       </select>
 
       <input

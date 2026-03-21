@@ -144,12 +144,13 @@ function EntryList({
                 <td>
                   <button
                     onClick={() => deleteEntry(entry.id)}
-                    style={{ marginRight: "8px" }}
+                    style={{ marginRight: "25px" }}
                   >
                     Delete
                   </button>
 
-                  <button onClick={() => handleEditClick(entry)}>
+                  <button onClick={() => handleEditClick(entry)}
+                    style={{ marginTop: "10px" }}>
                     Edit
                   </button>
                 </td>

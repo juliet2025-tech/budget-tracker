@@ -1,13 +1,14 @@
 body {
-  margin: 0;
+  
   font-family: Arial, sans-serif;
 }
 
 /* App container */
 .App {
   min-height: 100vh;
-  padding: 30px;
-  margin-left: 60px; /* 👈 shift content to the right */
+  
+   
+   /* 👈 shift content to the right */
   transition: all 0.3s ease;
 }
 
@@ -16,6 +17,98 @@ body {
   background-color: #ffffff;
   color: #000000;
 }
+
+/* Navbar container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background-color: #398cbd;
+   margin: 0;
+   position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  border-bottom: 1px solid #c8e6c9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+   width: 100%;
+  box-sizing: border-box;
+}
+
+/* Logo / Title */
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #fdfdfd;
+}
+
+/* Right section */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* User info stacked */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+/* Balance */
+.balance {
+  font-weight: bolder;
+  font-size: 15px;
+  margin: 0;
+  color: #fdfdfd;
+}
+
+/* Email */
+.email {
+  font-size: 12px;
+  color:#000000;
+  margin: 0;
+}
+
+/* Theme button */
+.theme-btn {
+  padding: 6px 10px;
+  font-size: 13px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 16px;
+  }
+
+  .balance {
+    font-size: 13px;
+    font-weight: bolder;
+  }
+
+  .email {
+    display: none; /* hide email on small screens for cleaner UI */
+  }
+
+  .theme-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+
+
 
 /* Dark mode */
 .App.dark {
@@ -35,6 +128,7 @@ form {
   gap: 10px;
   margin-bottom: 20px;
   max-width: 300px;
+  padding: 40px;
 }
 
 input, select, button {
@@ -49,6 +143,7 @@ button {
   background-color: #007bff;
   color: white;
   border: none;
+  
 }
 
 button:hover {
@@ -61,6 +156,8 @@ table {
   margin-top: 10px;
   width: 100%;
   max-width: 600px;
+  padding: 40px;
+
 }
 
 th, td {
@@ -100,7 +197,7 @@ th, td {
 }
 
 .modal-content {
-  background: white;
+  background: rgb(107, 103, 103);
   padding: 20px;
   border-radius: 10px;
   width: 300px;
@@ -111,4 +208,86 @@ th, td {
   width: 100%;
   margin-bottom: 10px;
   padding: 8px;
+}
+
+.entry-list {
+    /* 👈 pushes everything down */
+  padding: 40px;
+}
+
+.entry-list input,
+.entry-list select {
+  padding: 8px 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.entry-list input:focus,
+.entry-list select:focus {
+  border-color: #007bff;
+}
+
+.entry-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.entry-list th {
+  background-color: #2b3f5c;
+  text-align: left;
+}
+
+.entry-list th,
+.entry-list td {
+  
+  border: 1px solid #ddd;
+}
+
+.entry-list tr:hover {
+  background-color: #f9f9f9;
+}
+
+.entry-list button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.entry-list button:first-child {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.entry-list button:last-child {
+  background-color: #1890ff;
+  color: white;
+}
+
+.entry-list button:hover {
+  opacity: 0.8;
+}
+
+
+.category-summary {
+   /* 👈 simple spacing from top */
+  padding: 40px;
+}
+
+.category-item {
+  display: flex;
+  
+  margin-bottom: 10px; /* space between rows */
+}
+
+.amount {
+  margin-left: 20px; /* 👈 adds space between category and amount */
+}
+
+.chart-container {
+  padding: 40px; /* 👈 exactly what you want */
+   margin-bottom: 20px;
 }

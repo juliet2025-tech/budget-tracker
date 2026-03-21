@@ -1,13 +1,22 @@
-function Header({ balance , toggleTheme }) {
+import React from "react";
+
+const Header = ({ balance, user, toggleTheme }) => {
   return (
-    <div>
-      <h1>Budget Tracker</h1>
-      <h2>Balance: ₦{balance}</h2>
-        <button onClick={toggleTheme}>Toggle Theme</button>
-    </div>
+    <header className="navbar">
+      <h2 className="logo">Budget Tracker</h2>
 
-    
+      <div className="nav-right">
+        <div className="user-info">
+          <p className="balance">₦{balance}</p>
+          {user && <p className="email">{user.email}</p>}
+        </div>
+
+        <button className="theme-btn" onClick={toggleTheme}>
+          Theme
+        </button>
+      </div>
+    </header>
   );
-}
+};
 
-export default Header; 
+export default Header;

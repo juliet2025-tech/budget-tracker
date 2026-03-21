@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { auth } from "../firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
@@ -18,6 +19,20 @@ function Login() {
       alert(error.message);
     }
   };
+
+  const handleResetPassword = async () => {
+  if (!email) {
+    alert("Enter your email first");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Password reset email sent!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
   return (
     <form onSubmit={handleLogin}>
@@ -40,6 +55,10 @@ function Login() {
       />
 
       <button type="submit">Login</button>
+
+      <button onClick={handleResetPassword}>
+  Forgot Password?
+</button>
     </form>
   );
 }
