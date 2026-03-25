@@ -1,7 +1,22 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "./firebase";
-import { collection, addDoc, onSnapshot, query , deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -18,12 +33,10 @@ function App() {
   const [entries, setEntries] = useState([]);
   const [filterDate, setFilterDate] = useState("");
   const [theme, setTheme] = useState("light");
-  const [showLogin, setShowLogin] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-const [categoryFilter, setCategoryFilter] = useState("");
-const [typeFilter, setTypeFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
 
-  // Get current user ID
   const userId = user?.uid;
 
   // 🔐 Auth listener
@@ -35,37 +48,50 @@ const [typeFilter, setTypeFilter] = useState("");
     return () => unsubscribe();
   }, []);
 
- useEffect(() => {
-  if (!userId) return;
+  // 📦 Fetch entries
+  useEffect(() => {
+    if (!userId) return;
 
-  const q = query(collection(db, "users", userId, "entries"));
+    const q = query(collection(db, "users", userId, "entries"));
 
-  const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    const userEntries = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const userEntries = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-    setEntries(userEntries);
-  });
+      setEntries(userEntries);
+    });
 
-  return () => unsubscribe();
-}, [userId]);
+    return () => unsubscribe();
+  }, [userId]);
 
-  // ➕ Add entry to Firestore
+  // ➕ Add entry
   const addEntry = async (entry) => {
     if (!userId) return;
 
-    try {
-      const docRef = await addDoc(
-        collection(db, "users", userId, "entries"),
-        entry
-      );
+    const docRef = await addDoc(
+      collection(db, "users", userId, "entries"),
+      entry
+    );
 
-      setEntries([...entries, { ...entry, id: docRef.id }]);
-    } catch (error) {
-      console.error(error);
-    }
+    setEntries([...entries, { ...entry, id: docRef.id }]);
+  };
+
+  // 🗑 Delete entry
+  const deleteEntry = async (id) => {
+    if (!userId) return;
+
+    const entryRef = doc(db, "users", userId, "entries", id);
+    await deleteDoc(entryRef);
+  };
+
+  // ✏️ Edit entry
+  const editEntry = async (id, updatedEntry) => {
+    if (!userId) return;
+
+    const entryRef = doc(db, "users", userId, "entries", id);
+    await updateDoc(entryRef, updatedEntry);
   };
 
   // 🎨 Theme toggle
@@ -73,87 +99,80 @@ const [typeFilter, setTypeFilter] = useState("");
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  // 💰 Balance calculation
+  // 💰 Balance
   const totalBalance = entries.reduce((acc, entry) => {
     return entry.type === "income"
       ? acc + entry.amount
       : acc - entry.amount;
   }, 0);
 
-  const deleteEntry = async (id) => {
-  if (!userId) return;
-
-  try {
-    const entryRef = doc(db, "users", userId, "entries", id);
-    await deleteDoc(entryRef);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const editEntry = async (id, updatedEntry) => {
-  console.log("Editing ID:", id);
-  console.log("New Data:", updatedEntry);
-
-  if (!userId) return;
-
-  try {
-    const entryRef = doc(db, "users", userId, "entries", id);
-    await updateDoc(entryRef, updatedEntry);
-    console.log("Update successful");
-  } catch (error) {
-    console.error("Error updating:", error);
-  }
-};
-  // 📅 Filter entries by date
+  // 📅 Filter
   const filteredEntries = filterDate
     ? entries.filter((entry) => entry.date === filterDate)
     : entries;
 
+  // 🔒 Protected Route Wrapper
+  const ProtectedRoute = ({ children }) => {
+    return user ? children : <Navigate to="/login" />;
+  };
+
   return (
-    <div className={`App ${theme}`}>
-      
-      {!user ? (
-        <>
-          {!showLogin ? <Signup /> : <Login />}
+    <BrowserRouter>
+      <div className={`App ${theme}`}>
 
-          <button onClick={() => setShowLogin(!showLogin)}>
-            {showLogin ? "Go to Signup" : "Go to Login"}
-          </button>
-        </>
-      ) : (
-        <>
-          
+        <Routes>
 
-          <Header balance={totalBalance} toggleTheme={toggleTheme}  user={user} />
+          {/* Signup */}
+          <Route path="/signup" element={<Signup />} />
 
+          {/* Login */}
+          <Route path="/login" element={<Login />} />
 
-          
+          {/* Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header
+                    balance={totalBalance}
+                    toggleTheme={toggleTheme}
+                    user={user}
+                  />
 
-          <EntryForm addEntry={addEntry} />
+                  <EntryForm addEntry={addEntry} />
 
-          <EntryList
-  entries={filteredEntries}
-  setFilterDate={setFilterDate}
-  deleteEntry={deleteEntry}
-  editEntry={editEntry}
-  searchTerm={searchTerm}
-  setSearchTerm={setSearchTerm}
-  categoryFilter={categoryFilter}
-  setCategoryFilter={setCategoryFilter}
-  typeFilter={typeFilter}
-  setTypeFilter={setTypeFilter}
-/>
+                  <EntryList
+                    entries={filteredEntries}
+                    setFilterDate={setFilterDate}
+                    deleteEntry={deleteEntry}
+                    editEntry={editEntry}
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    categoryFilter={categoryFilter}
+                    setCategoryFilter={setCategoryFilter}
+                    typeFilter={typeFilter}
+                    setTypeFilter={setTypeFilter}
+                  />
 
-          <CategorySummary entries={filteredEntries} />
-          
+                  <CategorySummary entries={filteredEntries} />
 
-          <Chart entries={filteredEntries} />
-          <button onClick={() => signOut(auth)}>Logout</button>
-        </>
-      )}
+                  <Chart entries={filteredEntries} />
 
-    </div>
+                  <button onClick={() => signOut(auth)}>
+                    Logout
+                  </button>
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Default route */}
+          <Route path="*" element={<Navigate to="/login" />} />
+
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

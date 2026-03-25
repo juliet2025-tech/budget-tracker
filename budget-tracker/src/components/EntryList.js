@@ -120,44 +120,36 @@ function EntryList({
       ) : filteredData.length === 0 ? (
         <p>No matching entries</p>
       ) : (
-        <table border="1" cellPadding="10">
-          <thead>
-            <tr>
-              <th>Description</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+        <div className="entries-container">
+  {filteredData.map((entry) => (
+    <div key={entry.id} className={`entry-card ${entry.type}`}>
 
-          <tbody>
-            {filteredData.map((entry) => (
-              <tr key={entry.id}>
-                <td>{entry.description}</td>
-                <td>₦{entry.amount}</td>
-                <td>{entry.type}</td>
-                <td>{entry.category}</td>
-                <td>{entry.date}</td>
+      <h3>{entry.description}</h3>
 
-                <td>
-                  <button
-                    onClick={() => deleteEntry(entry.id)}
-                    style={{ marginRight: "25px" }}
-                  >
-                    Delete
-                  </button>
+      <p>
+        ₦{entry.amount} ({entry.type})
+      </p>
 
-                  <button onClick={() => handleEditClick(entry)}
-                    style={{ marginTop: "10px" }}>
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <p>{entry.category}</p>
+
+      <p className="date">{entry.date}</p>
+
+      <div className="actions">
+        <button
+          onClick={() => deleteEntry(entry.id)}
+          style={{ marginRight: "15px" }}
+        >
+          Delete
+        </button>
+
+        <button onClick={() => handleEditClick(entry)}>
+          Edit
+        </button>
+      </div>
+
+    </div>
+  ))}
+</div>
       )}
 
       {/* 🧾 EDIT MODAL */}

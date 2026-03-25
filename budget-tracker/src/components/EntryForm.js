@@ -4,28 +4,46 @@ function EntryForm({ addEntry }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("expense");
-  const [category, setCategory] = useState("category")
+  const [category, setCategory] = useState("")
   const [date, setDate] = useState("");
+const expenseCategories = [
+  "Food",
+  "Transport",
+  "Bills",
+  "Shopping",
+  "Education"
+];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const incomeCategories = [
+  "Salary",
+  "Freelance",
+  "Business",
+  "Gift",
+  "Other"
+];
 
-    const newEntry = {
-      
-      description,
-      amount: Number(amount),
-      type,
-      category,
-      date,
-    };
+// ✅ MOVE IT HERE
+const categories =
+  type === "expense" ? expenseCategories : incomeCategories;
 
-    addEntry(newEntry);
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    // clear form
-    setDescription("");
-    setAmount("");
-    setDate("");
+  const newEntry = {
+    description,
+    amount: Number(amount),
+    type,
+    category,
+    date,
   };
+
+  addEntry(newEntry);
+
+  // clear form
+  setDescription("");
+  setAmount("");
+  setDate("");
+};
 
   return (
     <form onSubmit={handleSubmit}>
@@ -47,18 +65,33 @@ function EntryForm({ addEntry }) {
         required
       />
 
-      <select value={type} onChange={(e) => setType(e.target.value)}>
-        <option value="expense">Expense</option>
-        <option value="income">Income</option>
-      </select>
+      <select
+  value={type}
+  onChange={(e) => {
+    setType(e.target.value);
+    setCategory(""); // reset category
+  }}
+>
+  <option value="expense">Expense</option>
+  <option value="income">Income</option>
+</select>
 
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option>Food</option>
-        <option>Transport</option>
-        <option>Entertainment</option>
-        <option>Salary</option>
-         <option>personal</option>
-      </select>
+      <select
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+>
+  <option value="" disabled>Select Category</option>
+
+  {categories.map((cat, index) => (
+    <option key={index} value={cat}>
+      {cat}
+    </option>
+  ))}
+</select>
+
+
+
+
 
       <input
         type="date"

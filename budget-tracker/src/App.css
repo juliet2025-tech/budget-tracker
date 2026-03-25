@@ -1,6 +1,8 @@
 body {
   
   font-family: Arial, sans-serif;
+   
+  
 }
 
 /* App container */
@@ -14,12 +16,18 @@ body {
 
 /* Light mode */
 .App.light {
-  background-color: #ffffff;
+  background-color: #d4c3c3;
   color: #000000;
 }
 
+.App.dark {
+  background-color: #000000;
+  color: #ffffff;}
+
+
 /* Navbar container */
 .navbar {
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,6 +42,49 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
    width: 100%;
   box-sizing: border-box;
+}
+
+
+.entries-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px;
+}
+
+.entry-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.entry-card.expense {
+  border-left: 5px solid red;
+}
+
+.entry-card.income {
+  border-left: 5px solid green;
+}
+
+.dark .entry-card.expense .entry-details p {
+  color: black;
+}
+
+.entry-card h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.date {
+  font-size: 12px;
+  color: gray;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 /* Logo / Title */
@@ -275,8 +326,16 @@ th, td {
 .category-summary {
    /* 👈 simple spacing from top */
   padding: 40px;
+  color: #000000;
 }
 
+
+.category-summary .summary-title {
+  color: #fff;
+}
+
+.App.light .category-summary .summary-title {
+  color: black;}
 .category-item {
   display: flex;
   
@@ -290,4 +349,78 @@ th, td {
 .chart-container {
   padding: 40px; /* 👈 exactly what you want */
    margin-bottom: 20px;
+}
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #fff;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.amounts {
+  display: flex;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.income {
+  color: green;
+  
+}
+
+.expense {
+  color: red
+
+}
+
+.empty {
+  text-align: center;
+  color: gray;
+}
+
+/* Container */
+.chart-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* Light mode */
+.App.light .chart-container {
+  background: #ffffff;
+}
+
+/* Dark mode */
+.App.dark .chart-container {
+  background: #1f2937;
+}
+
+/* Title */
+.chart-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Empty state */
+.empty {
+  color: gray;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .chart-container {
+    padding: 10px;
+  }
+
+  .chart-title {
+    font-size: 16px;
+  }
 }

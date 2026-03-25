@@ -2,11 +2,19 @@ function CategorySummary({ entries }) {
   const categoryTotals = entries.reduce((acc, entry) => {
     const { category, amount, type } = entry;
 
-    if (type === "expense") {
-      if (!acc[category]) {
-        acc[category] = 0;
-      }
-      acc[category] += amount;
+    if (!category) return acc;
+
+    if (!acc[category]) {
+      acc[category] = {
+        income: 0,
+        expense: 0,
+      };
+    }
+
+    if (type === "income") {
+      acc[category].income += Number(amount);
+    } else if (type === "expense") {
+      acc[category].expense += Number(amount);
     }
 
     return acc;
@@ -14,18 +22,32 @@ function CategorySummary({ entries }) {
 
   return (
     <div className="category-summary">
-      <h3>Category Summary</h3>
+      <h3  className="summary-title">Category Summary </h3>
 
       {Object.keys(categoryTotals).length === 0 ? (
-        <p className="empty">No expense data yet</p>
+        <p className="empty">No data yet</p>
       ) : (
         <ul>
-          {Object.entries(categoryTotals).map(([category, total]) => (
-            <li key={category} className="category-item">
-              <span>{category}</span>
-              <span className="amount">₦{total}</span>
-            </li>
-          ))}
+          {Object.entries(categoryTotals).map(([category, values]) => {
+            const income = values.income;
+            const expense = values.expense;
+
+            return (
+              <li key={category} className="category-item">
+                <span>{category}</span>
+
+                <div className="amounts">
+                  {income > 0 && (
+                    <span className="income">+₦{income}</span>
+                  )}
+
+                  {expense > 0 && (
+                    <span className="expense">-₦{expense}</span>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
