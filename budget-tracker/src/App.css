@@ -346,10 +346,7 @@ th, td {
   margin-left: 20px; /* 👈 adds space between category and amount */
 }
 
-.chart-container {
-  padding: 40px; /* 👈 exactly what you want */
-   margin-bottom: 20px;
-}
+
 
 .category-item {
   display: flex;
@@ -386,13 +383,42 @@ th, td {
 }
 
 /* Container */
+
+
 .chart-container {
   width: 100%;
   max-width: 500px;
-  padding: 15px;
+  padding: 40px;
+  margin: 20px auto;  /* 👈 THIS is what you need */
   border-radius: 12px;
 }
 
+/* 📱 Tablets & small screens */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 25px;
+    margin: 15px;
+     max-width: 90%;
+  }
+}
+
+/* 📱 Mobile phones */
+@media (max-width: 600px) {
+  .chart-container {
+    padding: 20px;
+    margin: 10px;
+     max-width: 90%;
+  }
+}
+
+/* 📱 Very small phones */
+@media (max-width: 400px) {
+  .chart-container {
+    padding: 15px;
+    margin: 8px;
+     max-width: 90%;
+  }
+}
 /* Light mode */
 .App.light .chart-container {
   background: #ffffff;
@@ -407,6 +433,7 @@ th, td {
 .chart-title {
   font-weight: 600;
   margin-bottom: 10px;
+  
 }
 
 /* Empty state */
@@ -415,10 +442,8 @@ th, td {
 }
 
 /* Mobile tweaks */
-@media (max-width: 600px) {
-  .chart-container {
-    padding: 10px;
-  }
+@media (max-width: 400px) {
+  
 
   .chart-title {
     font-size: 16px;
