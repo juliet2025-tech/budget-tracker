@@ -396,7 +396,7 @@ th, td {
 /* 📱 Tablets & small screens */
 @media (max-width: 768px) {
   .chart-container {
-    padding: 25px;
+    padding: 40px;
     margin: 15px;
      max-width: 90%;
   }
@@ -405,16 +405,17 @@ th, td {
 /* 📱 Mobile phones */
 @media (max-width: 600px) {
   .chart-container {
-    padding: 20px;
+    padding: 40px;
     margin: 10px;
      max-width: 90%;
+     margin-left: 10px;
   }
 }
 
 /* 📱 Very small phones */
 @media (max-width: 400px) {
   .chart-container {
-    padding: 15px;
+    padding: 35px;
     margin: 8px;
      max-width: 70%;
      margin-left: 10px;
