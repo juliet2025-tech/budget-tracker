@@ -30,6 +30,7 @@ import "./App.css";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState([]);
   const [filterDate, setFilterDate] = useState("");
   const [theme, setTheme] = useState("light");
@@ -43,7 +44,10 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+       setLoading(false);
     });
+
+
 
     return () => unsubscribe();
   }, []);
@@ -113,8 +117,9 @@ function App() {
 
   // 🔒 Protected Route Wrapper
   const ProtectedRoute = ({ children }) => {
-    return user ? children : <Navigate to="/login" />;
-  };
+    if (loading) return <p>Loading...</p>;
+  return user ? children : <Navigate to="/login" />;
+};
 
   return (
     <BrowserRouter>
