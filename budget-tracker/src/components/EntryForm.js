@@ -1,11 +1,13 @@
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function EntryForm({ addEntry }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("expense");
   const [category, setCategory] = useState("")
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(null);
 const expenseCategories = [
   "Food",
   "Transport",
@@ -34,7 +36,7 @@ const handleSubmit = (e) => {
     amount: Number(amount),
     type,
     category,
-    date,
+    date: date ? date.toISOString().split("T")[0] : "",
   };
 
   addEntry(newEntry);
@@ -42,7 +44,7 @@ const handleSubmit = (e) => {
   // clear form
   setDescription("");
   setAmount("");
-  setDate("");
+  setDate(null);
 };
 
   return (
@@ -93,12 +95,13 @@ const handleSubmit = (e) => {
 
 
 
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        required
-      />
+      <DatePicker
+  selected={date}
+  onChange={(selectedDate) => setDate(selectedDate)}
+  dateFormat="MMM d, yyyy"
+  placeholderText="Select date"
+  className="date-picker"
+/>
 
       <button type="submit">Add</button>
     </form>
