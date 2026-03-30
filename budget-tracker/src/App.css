@@ -543,3 +543,64 @@ th, td {
   font-size: 16px;
    transform: translateY(1.3px);
 }
+
+/* EntryForm main input styles */
+.entry-form input,
+.entry-form select,
+.date-picker {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* DatePicker wrapper and input */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* DatePicker popup */
+.react-datepicker {
+  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  border: 1px solid #1704c2;
+  width: 100%;
+  z-index: 9999;
+}
+
+.react-datepicker__header {
+  background-color: #190396;
+  color: white;
+  border-bottom: none;
+}
+
+.react-datepicker__current-month {
+  color: white;
+  font-weight: bold;
+}
+
+.react-datepicker__day:hover {
+  background-color: #e6f4ea;
+}
+
+/* Close icon inside input */
+.react-datepicker__close-icon {
+  position: absolute;
+  right: 5px; /* relative to input */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: red;
+  opacity: 1;
+  cursor: pointer;
+}
