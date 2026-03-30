@@ -147,18 +147,13 @@ function App() {
 
                   <EntryForm addEntry={addEntry} />
 
-                  <EntryList
-                    entries={filteredEntries}
-                    setFilterDate={setFilterDate}
-                    deleteEntry={deleteEntry}
-                    editEntry={editEntry}
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    categoryFilter={categoryFilter}
-                    setCategoryFilter={setCategoryFilter}
-                    typeFilter={typeFilter}
-                    setTypeFilter={setTypeFilter}
-                  />
+                 
+<EntryList
+  entries={entries}
+  deleteEntry={deleteEntry}
+  editEntry={editEntry}
+  loading={loading}
+/>
 
                   <CategorySummary entries={filteredEntries} />
 
